@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct Pleasure {
+struct Pleasure: Identifiable {
     
+    let id: UUID = UUID()
     let name: String
     let color: Color
-    let image: Image
+    let imageName: String
     let challenges: [Challenge]
     
 }
