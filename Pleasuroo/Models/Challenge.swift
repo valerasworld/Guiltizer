@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-struct Challenge {
+struct Challenge: Identifiable {
     
+    let id: UUID = UUID()
     let level: Int
-    let name: String
+    let title: String
     let shortDescription: String
     let description: String
-    let image: Image
+    let imageName: String
     
     var isLocked: Bool
     var isDoneAngelWay: Bool
