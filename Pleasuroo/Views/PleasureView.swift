@@ -10,21 +10,24 @@ import SwiftUI
 struct PleasureView: View {
     
     @Environment(PleasureViewModel.self) var pleasureViewModel
-    
+
     var body: some View {
         NavigationStack {
-            VStack {
-                ForEach(pleasureViewModel.pleasures) { pleasure in
-                    NavigationLink {
-                        // Levels View
-                    } label: {
-                        // Card View
-                    }
+            ZStack {
+                VStack {
+                    ForEach(pleasureViewModel.pleasures) { pleasure in
+                        NavigationLink {
+                            // Levels View
+                            LevelsView(title: pleasure.name, challenges: pleasure.challenges)
+                        } label: {
+                            // Card View
+                            PleasureCardView(name: pleasure.name)
+                        }
 
+                    }
                 }
             }
-            .navigationTitle("Pleasure")
-            .padding()
+            .navigationTitle("Pleasures")
         }
     }
 }
