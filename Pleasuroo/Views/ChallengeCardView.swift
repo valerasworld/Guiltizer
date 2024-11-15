@@ -13,14 +13,27 @@ struct ChallengeCardView: View {
     
     var body: some View {
         ZStack {
-            RadialGradient(colors: [.white, .blue], center: .bottom, startRadius: 550, endRadius: 552)
+            LinearGradient(colors: [.cyan, .indigo], startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
-            VStack {
-                Text("\(challenge.title)")
-                    .font(.title2)
-                Spacer()
+            ZStack {
+                VStack {
+                    Text(challenge.title)
+                        .challengeText(color: .white)
+                    Spacer()
+                    Text(challenge.description)
+                        .challengeText(color: .white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(3)
+                        .frame(width: 350)
+                    Spacer()
+                }
+                .padding(50)
+                CircleView(yDragAmount: 200)
             }
+            .padding()
+            
         }
+        .ignoresSafeArea()
     }
 }
 
