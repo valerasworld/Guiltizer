@@ -32,54 +32,82 @@ struct LevelsView: View {
     ]
     
     var body: some View {
-        VStack {
-            LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(challenges) { challenge in
-                    NavigationLink {
-                        ChallengeCardView(challenge: challenge)
-                    } label: {
-                        LevelCardView(level: challenge.level)
+        ZStack {
+            Image("burger")
+                .resizable()
+                .scaledToFit()
+                .clipShape(.circle)
+                .frame(minWidth: 1000)
+                .offset(x: 0, y: 300)
+                .opacity(0.1)
+            VStack {
+                LazyVGrid(columns: columns, spacing: 20) {
+                    ForEach(challenges) { challenge in
+                        NavigationLink {
+                            ChallengeCardView(challenge: challenge)
+                        } label: {
+                            LevelCardView(level: challenge.level)
+                        }
                     }
                 }
+                .padding(.vertical, 40)
+                .padding(.horizontal, 320)
+                Spacer()
             }
-            Spacer()
         }
         .navigationTitle("\(title)")
         .navigationBarTitleDisplayMode(.inline)
-        .padding(.vertical, 30)
-        .padding()
+        
     }
 }
 
 #Preview {
     LevelsView(title: "Junk Food",
                challenges: [
-                Challenge(
-                    level: 1,
-                    title: "My Favorite Meal",
-                    shortDescription: "Enjoy your favorite junk food.",
-                    description: "Enjoy your favorite amazing junk food. Enjoy your favorite junk food.",
-                    imageName: "junkfood",
-                    isLocked: false,
-                    isDoneAngelWay: false
-                ),
-                Challenge(
-                    level: 2,
-                    title: "My Ever-Wanted-To-Try Taste",
-                    shortDescription: "Plunge into your new food discovery!",
-                    description: "You are going to have your palate experience a brand-new taste! Are you ready?",
-                    imageName: "junkfood",
-                    isLocked: false,
-                    isDoneAngelWay: false
-                ),
-                Challenge(
-                    level: 3,
-                    title: "Now or Never",
-                    shortDescription: "It's yourself versus your never-wanted-to-try food",
-                    description: "Are you ready to level up and open yourself to a pleasure you've never wanted to try? If you ever end up going to town with that food, don't forget to thank me.",
-                    imageName: "junkfood",
-                    isLocked: false,
-                    isDoneAngelWay: false
-                )
+                   Challenge(
+                       level: 1,
+                       title: "My Favorite Meal",
+                       shortDescription: "Enjoy your favorite junk food.",
+                       description: "Enjoy your favorite amazing junk food. Enjoy your favorite junk food.",
+                       imageName: "junkfood",
+                       isLocked: false,
+                       isDoneAngelWay: false
+                   ),
+                   Challenge(
+                       level: 2,
+                       title: "My Wanted-To-Try Taste",
+                       shortDescription: "Plunge into your new food discovery!",
+                       description: "You are going to have your palate experience a brand-new taste! Are you ready?",
+                       imageName: "junkfood",
+                       isLocked: false,
+                       isDoneAngelWay: false
+                   ),
+                   Challenge(
+                       level: 3,
+                       title: "Now or Never",
+                       shortDescription: "It's yourself versus your never-wanted-to-try food",
+                       description: "Are you ready to level up and open yourself to a pleasure you've never wanted to try? If you ever end up going to town with that food, don't forget to thank me.",
+                       imageName: "junkfood",
+                       isLocked: false,
+                       isDoneAngelWay: false
+                   ),
+                   Challenge(
+                       level: 4,
+                       title: "Build Your Own Burger",
+                       shortDescription: "Customize the ultimate junk food treat.",
+                       description: "Get creative and build your own burger or sandwich using your favorite ingredients. Experiment with flavors and textures to create a masterpiece!",
+                       imageName: "burger",
+                       isLocked: true,
+                       isDoneAngelWay: false
+                   ),
+                   Challenge(
+                       level: 5,
+                       title: "Junk Food Around the World",
+                       shortDescription: "Taste junk food from different cuisines.",
+                       description: "Try a junk food dish from another country! Maybe tacos, poutine, or sushi rolls—you’ll discover new guilty pleasures.",
+                       imageName: "worldjunkfood",
+                       isLocked: true,
+                       isDoneAngelWay: false
+                   )
                ])
 }
