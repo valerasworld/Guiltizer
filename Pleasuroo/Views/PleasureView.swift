@@ -14,20 +14,22 @@ struct PleasureView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                VStack {
-                    ForEach(pleasureViewModel.pleasures) { pleasure in
-                        NavigationLink {
-                            // Levels View
-                            LevelsView(title: pleasure.name, challenges: pleasure.challenges)
-                        } label: {
-                            // Card View
-                            PleasureCardView(name: pleasure.name)
-                        }
+                ScrollView {
+                    VStack {
+                        ForEach(pleasureViewModel.pleasures) { pleasure in
+                            NavigationLink {
+                                // Levels View
+                                LevelsView(title: pleasure.name, challenges: pleasure.challenges)
+                            } label: {
+                                // Card View
+                                PleasureCardView(name: pleasure.name, image: pleasure.imageName, numChallenges: pleasure.challenges.count)
+                            }
 
+                        }
                     }
                 }
             }
-            .navigationTitle("Pleasures")
+            .navigationTitle("Guilty Pleasures")
         }
     }
 }

@@ -14,5 +14,4 @@ struct Pleasure: Identifiable {
     let color: Color
     let imageName: String
     let challenges: [Challenge]
-    
 }

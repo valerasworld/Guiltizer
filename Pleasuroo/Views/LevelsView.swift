@@ -42,9 +42,11 @@ struct LevelsView: View {
                     }
                 }
             }
+            Spacer()
         }
         .navigationTitle("\(title)")
         .navigationBarTitleDisplayMode(.inline)
+        .padding(.vertical, 30)
         .padding()
     }
 }

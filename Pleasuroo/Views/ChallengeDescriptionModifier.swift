@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension View {
-    func challengeText(color: Color) -> some View {
+    func challengeDescriptionText(color: Color) -> some View {
         modifier(ChallengeDescriptionModifier(color: color))
     }
 }
@@ -19,7 +19,11 @@ struct ChallengeDescriptionModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .font(.title)
+            .font(.title3)
             .foregroundStyle(color)
+            .padding(.vertical, 25)
+            .multilineTextAlignment(.center)
+            .lineLimit(5)
+            .frame(width: 350)
     }
 }

@@ -7,12 +7,20 @@
 
 import SwiftUI
 
-struct ChallengeTitleModifier: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+extension View {
+    func challengeTitleText(color: Color) -> some View {
+        modifier(ChallengeTitleModifier(color: color))
     }
 }
 
-#Preview {
-    ChallengeTitleModifier()
+struct ChallengeTitleModifier: ViewModifier {
+    
+    var color: Color
+    
+    func body(content: Content) -> some View {
+        content
+            .font(.title)
+            .bold()
+            .foregroundStyle(color)
+    }
 }

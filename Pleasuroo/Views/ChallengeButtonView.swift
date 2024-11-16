@@ -8,11 +8,31 @@
 import SwiftUI
 
 struct ChallengeButtonView: View {
+    
+    var text: String
+    var role: ButtonRole?
+    @Binding var isButtonEnabled: Bool
+    @State var rotationAmount: Double = 0
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(text, role: role) {
+            // Perform spin animation around y axis
+            withAnimation {
+                rotationAmount = role == .destructive ? 360 : -360
+            }
+        }
+        .padding(50)
+        .foregroundStyle(.white)
+        .font(.headline)
+        .background(role == .destructive ? .blue : .red)
+        .clipShape(.circle)
+        .disabled(!isButtonEnabled)
+        .opacity(isButtonEnabled ? 1 : 0.5)
+        .animation(.easeIn(duration: 0.4), value: isButtonEnabled)
+        .rotation3DEffect(.degrees(rotationAmount), axis: (x: 0, y: 1, z: 0))
     }
 }
 
 #Preview {
-    ChallengeButtonView()
+    ChallengeButtonView(text: "Done", isButtonEnabled: .constant(true))
 }

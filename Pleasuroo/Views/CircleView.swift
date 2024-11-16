@@ -11,17 +11,19 @@ struct CircleView: View {
     
     @State var yDragAmount: CGFloat
     let maxDragAmount: CGFloat = 500
+    let tolerance: Double = 10
+    @Binding var isDragDisabled: Bool
     
     var body: some View {
         Circle()
-            .fill(.yellow)
+            .fill(.white)
             .frame(width: 1000)
             .offset(x: 0, y: yDragAmount)
             .gesture(
                 DragGesture()
                     .onChanged { attributes in
                         let yTranslation = attributes.translation.height
-                        let isDragDisabled = yDragAmount > (maxDragAmount - 25)
+                        isDragDisabled = yDragAmount > (maxDragAmount - tolerance)
                         let canDrag = !isDragDisabled && yTranslation >= 200 && yTranslation <= maxDragAmount
                         
                         if canDrag {
@@ -32,13 +34,13 @@ struct CircleView: View {
                     .onEnded { attributes in
                         
                         let yTranslation = attributes.translation.height
-                        let isDragDisabled = yDragAmount > (maxDragAmount - 25)
+                        isDragDisabled = yDragAmount > (maxDragAmount - tolerance)
                         
                         withAnimation(
                             Animation.spring(duration: 0.8, bounce: 0.6)
                         ) {
                             if !isDragDisabled {
-                                yDragAmount = yDragAmount < (maxDragAmount - 25) ? 200 : yTranslation
+                                yDragAmount = yDragAmount < (maxDragAmount - tolerance) ? 200 : yTranslation
                             }
                         }
                     }
@@ -55,5 +57,5 @@ struct CircleView: View {
 }
 
 #Preview {
-    CircleView(yDragAmount: 200)
+    CircleView(yDragAmount: 200, isDragDisabled: .constant(false))
 }
