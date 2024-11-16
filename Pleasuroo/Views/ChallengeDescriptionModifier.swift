@@ -9,11 +9,11 @@ import SwiftUI
 
 extension View {
     func challengeText(color: Color) -> some View {
-        modifier(ChallengeTextModifier(color: color))
+        modifier(ChallengeDescriptionModifier(color: color))
     }
 }
 
-struct ChallengeTextModifier: ViewModifier {
+struct ChallengeDescriptionModifier: ViewModifier {
     
     var color: Color
     
