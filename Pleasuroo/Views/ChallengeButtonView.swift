@@ -10,9 +10,10 @@ import SwiftUI
 struct ChallengeButtonView: View {
     
     var text: String
-    var role: ButtonRole?
+    var role: ButtonRole
     @Binding var isButtonEnabled: Bool
     @State var rotationAmount: Double = 0
+    let action: (ButtonRole) -> Void
     
     var body: some View {
         Button(text, role: role) {
@@ -20,6 +21,7 @@ struct ChallengeButtonView: View {
             withAnimation {
                 rotationAmount = role == .destructive ? 360 : -360
             }
+            action(role)
         }
         .padding(50)
         .foregroundStyle(.white)
@@ -34,5 +36,5 @@ struct ChallengeButtonView: View {
 }
 
 #Preview {
-    ChallengeButtonView(text: "Done", isButtonEnabled: .constant(true))
+    ChallengeButtonView(text: "Done", role: .destructive, isButtonEnabled: .constant(true), action: { role in print(role)})
 }

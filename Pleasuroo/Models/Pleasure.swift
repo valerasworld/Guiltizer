@@ -7,11 +7,21 @@
 
 import SwiftUI
 
-struct Pleasure: Identifiable {
+@Observable
+class Pleasure: Identifiable {
     
     let id: UUID = UUID()
     let name: String
     let color: Color
     let imageName: String
+    var devilAngel: Int
     let challenges: [Challenge]
+    
+    init(name: String, color: Color, imageName: String, devilAngel: Int = 0, challenges: [Challenge]) {
+        self.name = name
+        self.color = color
+        self.imageName = imageName
+        self.devilAngel = devilAngel
+        self.challenges = challenges
+    }
 }

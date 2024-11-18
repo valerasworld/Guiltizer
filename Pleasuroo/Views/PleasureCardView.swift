@@ -13,7 +13,6 @@ struct PleasureCardView: View {
     let image: String
     let numChallenges: Int
     
-    
     var body: some View {
         ZStack {
             LinearGradient(colors: [.blue, .indigo], startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -22,7 +21,7 @@ struct PleasureCardView: View {
                 .padding()
                 .overlay {
                     HStack(spacing: 10) {
-                        Image("burger")
+                        Image(image)
                             .resizable()
                             .scaledToFit()
                             .frame(maxWidth: 150, maxHeight: 200)
@@ -48,5 +47,5 @@ struct PleasureCardView: View {
 }
 
 #Preview {
-    PleasureCardView(name: "Junk Food", image: "burger", numChallenges: 5)
+    PleasureCardView(name: "Junk Food", image: "junk_food", numChallenges: 5)
 }
