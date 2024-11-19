@@ -94,7 +94,7 @@ struct ChallengeCardView: View {
                         }
                     }
                 }
-                .offset(x: 0, y: buttonOffset)
+                .offset(x: 0, y: challenge.isComplete ? -20 : buttonOffset)
                 .onChange(of: buttonOffset) {
                     print(buttonOffset)
                 }
