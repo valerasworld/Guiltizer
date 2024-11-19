@@ -33,7 +33,7 @@ struct PleasurooApp: App {
                 UITabBar.appearance().standardAppearance = appearance
                 UITabBar.appearance().scrollEdgeAppearance = appearance
             }
-            .tint(.blue)
+            .tint(.accent)
         }
     }
 }

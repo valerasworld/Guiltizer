@@ -2,7 +2,7 @@
 //  PleasureViewModel.swift
 //  Pleasuroo
 //
-//  Created by Valery Zazulin on 13/11/24.
+//  Created by Valery Zazulin and Saverio Negro on 13/11/24.
 //
 
 import SwiftUI
@@ -16,7 +16,7 @@ class PleasureViewModel {
                 level: 1,
                 title: "My Favorite Meal",
                 shortDescription: "Enjoy your favorite junk food.",
-                description: "Enjoy your favorite amazing junk food. Enjoy your favorite junk food.",
+                description: "Enjoy your favorite junk food.",
                 imageName: "junk_food",
                 isLocked: false,
                 isComplete: false,
@@ -236,6 +236,17 @@ class PleasureViewModel {
             ]
         )
     ]
+    var totalNumChallenges: Int {
+        var count = 0
+        
+        for pleasure in pleasures {
+            count += pleasure.challenges.count
+        }
+        
+        return count
+    }
+    
+    var coins: Int = 0
     
     func getNumChallengesDone(pleasureIndex: Int) -> Int {
         let challenges = pleasures[pleasureIndex].challenges
@@ -249,5 +260,11 @@ class PleasureViewModel {
         return count
     }
     
-    
+    func getTotalDevilAngelPoints() -> Int {
+        var count = 0
+        for pleasure in pleasures {
+            count += pleasure.devilAngelPoints
+        }
+        return count
+    }
 }

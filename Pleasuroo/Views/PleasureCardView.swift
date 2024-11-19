@@ -9,16 +9,17 @@ import SwiftUI
 
 struct PleasureCardView: View {
     
+    @Environment(PleasureViewModel.self) var pleasureViewModel
     let name: String
     let image: String
+    let pleasureIndex: Int
     let numChallenges: Int
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.blue, .indigo], startPoint: .topLeading, endPoint: .bottomTrailing)
+                Color.devil
                 .frame(height: 200)
                 .clipShape(.rect(cornerRadius: 20))
-                .padding()
                 .overlay {
                     HStack(spacing: 10) {
                         Image(image)
@@ -31,12 +32,18 @@ struct PleasureCardView: View {
                             .clipped()
                         VStack {
                             VStack(alignment: .leading) {
+                                // Pleasure Name
                                 Text("\(name)")
                                     .font(.title2).bold()
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(.blackish)
+                                // Number of Challenges
                                 Text("\(numChallenges) Challenges")
                                     .font(.subheadline)
-                                    .foregroundStyle(.white)
+                                    .foregroundStyle(.blackish)
+                                // Devil / Angel Progress
+                                DevilAngelBarView(barWidth: 150, barHeight: 10, pleasureIndex: pleasureIndex, progressType: .pleasure)
+                                    .environment(pleasureViewModel)
+                                    .shadow(radius: 4, x: 6)
                             }
                             .frame(maxWidth: 150)
                         }
@@ -47,5 +54,6 @@ struct PleasureCardView: View {
 }
 
 #Preview {
-    PleasureCardView(name: "Junk Food", image: "junk_food", numChallenges: 5)
+    PleasureCardView(name: "Junk Food", image: "junk_food", pleasureIndex: 0, numChallenges: 5)
+        .environment(PleasureViewModel())
 }

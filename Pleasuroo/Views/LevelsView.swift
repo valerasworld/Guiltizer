@@ -14,7 +14,9 @@ struct LevelsView: View {
     let title: String
     let image: String
     let pleasureIndex: Int
-    var challenges: [Challenge]
+    var challenges: [Challenge] {
+        pleasureViewModel.pleasures[pleasureIndex].challenges
+    }
     @State var challengesCompleted = 0.0
     let columns = [
         /// The grid will fit in as many items per row as possible (`.adaptive()`)
@@ -36,25 +38,20 @@ struct LevelsView: View {
     
     var body: some View {
         ZStack {
-            Image(image)
-                .resizable()
-                .scaledToFit()
-                .clipShape(.circle)
-                .frame(minWidth: 1000)
-                .offset(x: 0, y: 300)
-                .opacity(0.1)
+            Color.black
             VStack {
-                // Implement functionality for progress view
                 ProgressView(value: challengesCompleted, total: Double(challenges.count))
                     .frame(width: 300)
+                    .tint(.red)
                 
-                LazyVGrid(columns: columns, spacing: 10) {
+                LazyVGrid(columns: columns, spacing: 8) {
                     ForEach(challenges) { challenge in
                         NavigationLink {
                             ChallengeCardView(pleasureIndex: pleasureIndex, challenge: challenge)
                                 .toolbar(.hidden, for: .tabBar)
                         } label: {
-                            LevelCardView(level: challenge.level, isLocked: challenge.isLocked)
+                            LevelCardView(level: challenge.level, pleasureIndex: pleasureIndex)
+                                .environment(pleasureViewModel)
                         }
                         .disabled(challenge.isLocked)
                     }
@@ -68,7 +65,6 @@ struct LevelsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             challengesCompleted = Double(pleasureViewModel.getNumChallengesDone(pleasureIndex: pleasureIndex))
-            print(challengesCompleted)
         }
     }
 }
@@ -77,58 +73,7 @@ struct LevelsView: View {
     LevelsView(
         title: "Junk Food",
         image: "junk_food",
-        pleasureIndex: 0,
-        challenges: [
-            Challenge(
-                level: 1,
-                title: "My Favorite Meal",
-                shortDescription: "Enjoy your favorite junk food.",
-                description: "Enjoy your favorite amazing junk food. Enjoy your favorite junk food.",
-                imageName: "junkfood",
-                isLocked: false,
-                isComplete: false,
-                isDoneAngelWay: false
-            ),
-            Challenge(
-                level: 2,
-                title: "My Wanted-To-Try Taste",
-                shortDescription: "Plunge into your new food discovery!",
-                description: "You are going to have your palate experience a brand-new taste! Are you ready?",
-                imageName: "junkfood",
-                isLocked: true,
-                isComplete: false,
-                isDoneAngelWay: false
-            ),
-            Challenge(
-                level: 3,
-                title: "Now or Never",
-                shortDescription: "It's yourself versus your never-wanted-to-try food",
-                description: "Are you ready to level up and open yourself to a pleasure you've never wanted to try? If you ever end up going to town with that food, don't forget to thank me.",
-                imageName: "junkfood",
-                isLocked: true,
-                isComplete: false,
-                isDoneAngelWay: false
-            ),
-            Challenge(
-                level: 4,
-                title: "Build Your Own Burger",
-                shortDescription: "Customize the ultimate junk food treat.",
-                description: "Get creative and build your own burger or sandwich using your favorite ingredients. Experiment with flavors and textures to create a masterpiece!",
-                imageName: "burger",
-                isLocked: true,
-                isComplete: false,
-                isDoneAngelWay: false
-            ),
-            Challenge(
-                level: 5,
-                title: "Junk Food Around the World",
-                shortDescription: "Taste junk food from different cuisines.",
-                description: "Try a junk food dish from another country! Maybe tacos, poutine, or sushi rolls—you’ll discover new guilty pleasures.",
-                imageName: "worldjunkfood",
-                isLocked: true,
-                isComplete: false,
-                isDoneAngelWay: false
-            )
-        ])
+        pleasureIndex: 0
+    )
     .environment(PleasureViewModel())
 }

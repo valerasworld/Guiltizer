@@ -9,33 +9,97 @@ import SwiftUI
 
 struct LevelCardView: View {
     
+    @Environment(PleasureViewModel.self) var pleasureViewModel
     let level: Int
-    var isLocked: Bool
+    let pleasureIndex: Int
+    var challenge: Challenge {
+        return pleasureViewModel.pleasures[self.pleasureIndex].challenges[level - 1]
+    }
+    var isNewChallenge: Bool {
+        return !challenge.isLocked && !challenge.isComplete
+    }
+    @State var scaleEffect = 1.0
+    
+    // Animate the level card to prompt the user to take on the newly unlocked and
+    // yet to complete challenge.
+    func userPromptAnimation() {
+        var count = 0
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { timer in
+            
+            if !isNewChallenge || count == 2 {
+                timer.invalidate()
+            }
+            
+            if isNewChallenge {
+                withAnimation(
+                    Animation.spring(duration: 0.7, bounce: 0.7)
+                ) {
+                    scaleEffect = scaleEffect == 1 ? 0.85 : 1
+                }
+                scaleEffect = 1
+            }
+            
+            count += 1
+        }
+    }
     
     var body: some View {
         ZStack {
             Rectangle()
-                .fill(.blue)
+                .fill(.accent)
                 .scaledToFit()
                 .frame(maxWidth: 100, maxHeight: 100)
                 .clipShape(.rect(cornerRadius: 10))
                 .overlay {
-                    if isLocked {
-                        Image(systemName: "lock.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundStyle(.indigo)
-                            .padding(10)
+                    ZStack {
+                        if challenge.isLocked {
+                            Image(systemName: "lock.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .foregroundStyle(.white)
+                                .padding(10)
+                                .opacity(0.3)
+                        } else if self.challenge.isComplete {
+                            GeometryReader { geometry in
+                                Image(self.challenge.isDoneAngelWay ? "angel_icon" : "devil_icon")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                                    .clipped()
+                                    .foregroundStyle(.angel)
+                                    .opacity(0.2)
+                            }
+                        }
+                        VStack {
+                            if challenge.isComplete {
+                                Spacer()
+                            }
+                            HStack {
+                                if challenge.isComplete {
+                                    Spacer()
+                                }
+                                let size = challenge.isComplete ? 25.0 : 50.0
+                                let hPadding = challenge.isComplete ? 5.0 : 0
+                                Text("\(level)")
+                                    .font(Font.system(size: size))
+                                    .foregroundStyle(.blackish)
+                                    .padding(.horizontal, hPadding)
+                                    .bold()
+                            }
+                        }
                     }
+                    
                 }
-            Text("\(level)")
-                .font(.largeTitle)
-                .foregroundStyle(.white)
         }
-        .opacity(isLocked ? 0.8 : 1)
+        .opacity(challenge.isLocked ? 0.9 : 1)
+        .scaleEffect(scaleEffect)
+        .onAppear {
+            userPromptAnimation()
+        }
     }
 }
 
 #Preview {
-    LevelCardView(level: 1, isLocked: true)
+    LevelCardView(level: 1, pleasureIndex: 0)
+        .environment(PleasureViewModel())
 }

@@ -2,7 +2,7 @@
 //  Challenge.swift
 //  Pleasuroo
 //
-//  Created by Valery Zazulin on 13/11/24.
+//  Created by Valery Zazulin and Saverio Negro on 13/11/24.
 //
 
 import SwiftUI
@@ -20,6 +20,13 @@ class Challenge: Identifiable {
     var isLocked: Bool
     var isComplete: Bool
     var isDoneAngelWay: Bool
+    var isDoneDevilWay: Bool {
+        get {
+            return isComplete && !isDoneAngelWay
+        }
+        
+        set {}
+    }
     
     init(level: Int, title: String, shortDescription: String, description: String, imageName: String, isLocked: Bool, isComplete: Bool, isDoneAngelWay: Bool) {
         self.level = level

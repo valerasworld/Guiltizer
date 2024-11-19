@@ -14,16 +14,18 @@ struct PleasureView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                Color.black
                 ScrollView {
                     VStack {
                         ForEach(pleasureViewModel.pleasures.indices, id: \.self) { index in
                             let pleasure = pleasureViewModel.pleasures[index]
                             NavigationLink {
                                 // Levels View
-                                LevelsView(title: pleasure.name, image: pleasure.imageName, pleasureIndex: index, challenges: pleasure.challenges)
+                                LevelsView(title: pleasure.name, image: pleasure.imageName, pleasureIndex: index)
                             } label: {
                                 // Card View
-                                PleasureCardView(name: pleasure.name, image: pleasure.imageName, numChallenges: pleasure.challenges.count)
+                                PleasureCardView(name: pleasure.name, image: pleasure.imageName, pleasureIndex: index, numChallenges: pleasure.challenges.count)
+                                    .padding(.horizontal, 20)
                             }
 
                         }
@@ -31,6 +33,20 @@ struct PleasureView: View {
                 }
             }
             .navigationTitle("Guilty Pleasures")
+            .toolbar {
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    HStack {
+                        Image(systemName: "bitcoinsign.circle.fill")
+                        Text("\(pleasureViewModel.coins)")
+                    }
+                    .padding()
+                }
+                
+                ToolbarItem(placement: .bottomBar) {
+                    DevilAngelBarView(barWidth: 300, barHeight: 20, progressType: .total)
+                }
+            }
         }
     }
 }

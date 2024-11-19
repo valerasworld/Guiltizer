@@ -11,9 +11,14 @@ struct ChallengeButtonView: View {
     
     var text: String
     var role: ButtonRole
-    @Binding var isButtonEnabled: Bool
+    @Binding var isDragDisabled: Bool
+    @Binding var isDoneDevilWay: Bool
+    @Binding var isComplete: Bool
+    var isButtonEnabled: Bool {
+        return (isDoneDevilWay && role == .destructive) || (isDragDisabled && !isComplete)
+    }
     @State var rotationAmount: Double = 0
-    let action: (ButtonRole) -> Void
+    let action: () -> Void
     
     var body: some View {
         Button(text, role: role) {
@@ -21,12 +26,12 @@ struct ChallengeButtonView: View {
             withAnimation {
                 rotationAmount = role == .destructive ? 360 : -360
             }
-            action(role)
+            action()
         }
-        .padding(50)
-        .foregroundStyle(.white)
+        .padding(25)
+        .foregroundStyle(.blackish)
         .font(.headline)
-        .background(role == .destructive ? .blue : .red)
+        .background(role == .destructive ? .angel : .devil)
         .clipShape(.circle)
         .disabled(!isButtonEnabled)
         .opacity(isButtonEnabled ? 1 : 0.5)
@@ -36,5 +41,5 @@ struct ChallengeButtonView: View {
 }
 
 #Preview {
-    ChallengeButtonView(text: "Done", role: .destructive, isButtonEnabled: .constant(true), action: { role in print(role)})
+    ChallengeButtonView(text: "Angel\nWay", role: .destructive, isDragDisabled: .constant(false), isDoneDevilWay: .constant(true), isComplete: .constant(true), action: {})
 }
