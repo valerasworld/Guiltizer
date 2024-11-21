@@ -14,8 +14,26 @@ struct PleasurooApp: App {
     
     var body: some Scene {
         WindowGroup {
-            PleasureView()
-                .environment(pleasureViewModel)
+            TabView {
+                Tab("Pleasures", systemImage: "flame.fill") {
+                    PleasureView()
+                        .environment(pleasureViewModel)
+                }
+                
+                Tab("Shop", systemImage: "cart.fill") {
+                        Circle()
+                        .frame(width: 200)
+                }
+            }
+            .onAppear {
+                let appearance = UITabBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                // Modify the background color of the tab bar
+//                appearance.backgroundColor = .blue
+                UITabBar.appearance().standardAppearance = appearance
+                UITabBar.appearance().scrollEdgeAppearance = appearance
+            }
+            .tint(.accent)
         }
     }
 }
