@@ -38,7 +38,7 @@ struct DevilAngelBarView: View {
         }
         return maxDelta / Double(numChallenges)
     }
-    @State var increaseAmount: Double = 0
+    @State var increaseAmount: Double = 0 // @State
     
     func setIncreaseAmount(points: Int) {
         withAnimation {

@@ -260,6 +260,14 @@ class PleasureViewModel {
         return count
     }
     
+    func getIsAngelOrDevil() -> Bool {
+        if getTotalDevilAngelPoints() >= 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func getTotalDevilAngelPoints() -> Int {
         var count = 0
         for pleasure in pleasures {

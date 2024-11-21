@@ -26,9 +26,9 @@ struct LevelsView: View {
         /// Control the number of columns to have using `.flexible()`.
         /// `.flexible()` lets you specify how big each item should be, while
         /// controlling how many columns there are.
-        GridItem(.flexible(minimum: 50, maximum: 100)),
-        GridItem(.flexible(minimum: 50, maximum: 100)),
-        GridItem(.flexible(minimum: 50, maximum: 100))
+        GridItem(.flexible(minimum: 50, maximum: 100), spacing: 16),
+        GridItem(.flexible(minimum: 50, maximum: 100), spacing: 16),
+        GridItem(.flexible(minimum: 50, maximum: 100), spacing: 16)
         
         /// Make one of the columns (first) fixed in size, while letting the other/s
         /// adapt and fill up the remaining space.
@@ -39,12 +39,13 @@ struct LevelsView: View {
     var body: some View {
         ZStack {
             Color.black
+//            Color.blackish.ignoresSafeArea()
             VStack {
                 ProgressView(value: challengesCompleted, total: Double(challenges.count))
-                    .frame(width: 300)
+                    .frame(width: 332)
                     .tint(.red)
                 
-                LazyVGrid(columns: columns, spacing: 8) {
+                LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(challenges) { challenge in
                         NavigationLink {
                             ChallengeCardView(pleasureIndex: pleasureIndex, challenge: challenge)

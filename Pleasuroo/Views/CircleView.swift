@@ -38,7 +38,7 @@ struct CircleView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 60, height: 300)
-                .offset(y: yDragAmount - 320)
+                .offset(y: yDragAmount - 390)
                 .gesture(
                     DragGesture()
                         .onChanged { attributes in

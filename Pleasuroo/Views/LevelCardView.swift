@@ -24,7 +24,7 @@ struct LevelCardView: View {
     // yet to complete challenge.
     func userPromptAnimation() {
         var count = 0
-        Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
             
             if !isNewChallenge || count == 2 {
                 timer.invalidate()
@@ -32,9 +32,9 @@ struct LevelCardView: View {
             
             if isNewChallenge {
                 withAnimation(
-                    Animation.spring(duration: 0.7, bounce: 0.7)
+                    Animation.spring(duration: 1.4, bounce: 0.4) // 0.7
                 ) {
-                    scaleEffect = scaleEffect == 1 ? 0.85 : 1
+                    scaleEffect = scaleEffect == 1 ? 0.95 : 1 // 0.85
                 }
                 scaleEffect = 1
             }
@@ -49,7 +49,7 @@ struct LevelCardView: View {
                 .fill(.accent)
                 .scaledToFit()
                 .frame(maxWidth: 100, maxHeight: 100)
-                .clipShape(.rect(cornerRadius: 10))
+                .clipShape(.rect(cornerRadius: 25))
                 .overlay {
                     ZStack {
                         if challenge.isLocked {
@@ -58,16 +58,18 @@ struct LevelCardView: View {
                                 .scaledToFit()
                                 .foregroundStyle(.white)
                                 .padding(10)
-                                .opacity(0.3)
+                                .opacity(0.2)
                         } else if self.challenge.isComplete {
                             GeometryReader { geometry in
-                                Image(self.challenge.isDoneAngelWay ? "angel_icon" : "devil_icon")
+//                                Image(self.challenge.isDoneAngelWay ? "angel_icon" : "devil_icon")
+                                Image(self.challenge.isDoneAngelWay ? "angel" : "devil")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: geometry.size.width, height: geometry.size.height)
-                                    .clipped()
+                                    
+                                    .scaleEffect(0.8)                                    .clipShape(.rect(cornerRadius: 25))
                                     .foregroundStyle(.angel)
-                                    .opacity(0.2)
+                                    .opacity(0.4)
                             }
                         }
                         VStack {
@@ -79,11 +81,13 @@ struct LevelCardView: View {
                                     Spacer()
                                 }
                                 let size = challenge.isComplete ? 25.0 : 50.0
-                                let hPadding = challenge.isComplete ? 5.0 : 0
+                                let hPadding = challenge.isComplete ? 10.0 : 0
+                                let vPadding = challenge.isComplete ? 10.0 : 0
                                 Text("\(level)")
                                     .font(Font.system(size: size))
                                     .foregroundStyle(.blackish)
                                     .padding(.horizontal, hPadding)
+                                    .padding(.vertical, vPadding)
                                     .bold()
                             }
                         }
@@ -91,7 +95,7 @@ struct LevelCardView: View {
                     
                 }
         }
-        .opacity(challenge.isLocked ? 0.9 : 1)
+//        .opacity(challenge.isLocked ? 0.9 : 1)
         .scaleEffect(scaleEffect)
         .onAppear {
             userPromptAnimation()

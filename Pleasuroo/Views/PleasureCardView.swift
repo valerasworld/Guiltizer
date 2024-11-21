@@ -19,22 +19,23 @@ struct PleasureCardView: View {
         ZStack {
                 Color.devil
                 .frame(height: 200)
-                .clipShape(.rect(cornerRadius: 20))
+                .clipShape(.rect(cornerRadius: 40))
                 .overlay {
-                    HStack(spacing: 10) {
+                    HStack(spacing: 16) {
                         Image(image)
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
                             .frame(maxWidth: 150, maxHeight: 200)
                             .clipShape(.rect(cornerRadius: 20))
                             .padding(.vertical, 30)
                             .padding(.horizontal, 0)
-                            .clipped()
+                            .clipped() // ???
                         VStack {
                             VStack(alignment: .leading) {
                                 // Pleasure Name
                                 Text("\(name)")
-                                    .font(.title2).bold()
+                                    .multilineTextAlignment(.leading)
+                                    .font(.title).bold()
                                     .foregroundStyle(.blackish)
                                 // Number of Challenges
                                 Text("\(numChallenges) Challenges")
@@ -43,7 +44,7 @@ struct PleasureCardView: View {
                                 // Devil / Angel Progress
                                 DevilAngelBarView(barWidth: 150, barHeight: 10, pleasureIndex: pleasureIndex, progressType: .pleasure)
                                     .environment(pleasureViewModel)
-                                    .shadow(radius: 4, x: 6)
+                                    .shadow(color: .blackish.opacity(0.6), radius: 4, x: 5, y: 1)
                             }
                             .frame(maxWidth: 150)
                         }
@@ -54,6 +55,6 @@ struct PleasureCardView: View {
 }
 
 #Preview {
-    PleasureCardView(name: "Junk Food", image: "junk_food", pleasureIndex: 0, numChallenges: 5)
+    PleasureCardView(name: "Binge Watching", image: "junk_food", pleasureIndex: 0, numChallenges: 5)
         .environment(PleasureViewModel())
 }

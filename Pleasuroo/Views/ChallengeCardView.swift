@@ -41,9 +41,10 @@ struct ChallengeCardView: View {
         if !challenge.isComplete {
             // Add points consequently
             if challenge.isDoneAngelWay {
-                pleasureViewModel.coins += 1
+                pleasureViewModel.coins += 150
                 pleasure.devilAngelPoints += 1
             } else {
+                pleasureViewModel.coins += 50
                 pleasure.devilAngelPoints -= 1
             }
         }
@@ -56,6 +57,7 @@ struct ChallengeCardView: View {
         
         ZStack {
             Color.black
+//            Color.blackish //
             ZStack {
                 VStack {
                     Text(challenge.title)
@@ -70,10 +72,14 @@ struct ChallengeCardView: View {
                     Spacer()
                     Text(challenge.description)
                         .challengeDescriptionText(color: .white)
+                        .bold()
                     Spacer()
                     Spacer()
                     Spacer()
                     Spacer()
+                    Spacer() //
+                    Spacer() //
+                    Spacer() //
                 }
                 .padding(80)
                 CircleView(isDragDisabled: $isDragDisabled, isComplete: $challenge.isComplete, buttonOffset: $buttonOffset)
@@ -100,7 +106,6 @@ struct ChallengeCardView: View {
                 }
             }
             .padding()
-            
         }
         .ignoresSafeArea()
     }
