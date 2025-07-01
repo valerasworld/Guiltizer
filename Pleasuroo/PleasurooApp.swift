@@ -16,6 +16,7 @@ struct PleasurooApp: App {
         WindowGroup {
 //            TabView {
 //                Tab("Pleasures", systemImage: "flame.fill") {
+//            DevilAngelView()
                     PleasureView()
                         .environment(pleasureViewModel)
 //                }
